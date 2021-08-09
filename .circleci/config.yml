@@ -54,7 +54,7 @@ workflows:
     jobs:
       - build-and-test:
           filters:
-            branchs:
+            branches:
               only:
                 - master
       - deploy_app_distribution_firebase:
