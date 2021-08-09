@@ -1,4 +1,4 @@
-package br.com.marcos2silva.marvel.local.model
+package br.com.marcos2silva.marvel.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

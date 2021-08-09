@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.marcos2silva.marvel.MarvelRepository
+import br.com.marcos2silva.marvel.data.repository.MarvelRepository
 import kotlinx.coroutines.launch
 
 class CharactersFavoritesViewModel(

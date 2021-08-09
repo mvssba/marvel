@@ -2,7 +2,7 @@ package br.com.marcos2silva.marvel.characters.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.marcos2silva.marvel.CoroutineTestRule
-import br.com.marcos2silva.marvel.MarvelRepository
+import br.com.marcos2silva.marvel.data.repository.MarvelRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runBlockingTest

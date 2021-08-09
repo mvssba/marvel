@@ -1,8 +1,8 @@
-package br.com.marcos2silva.marvel.data
+package br.com.marcos2silva.marvel.data.datasource.remote
 
 import br.com.marcos2silva.marvel.data.api.MarvelService
 import br.com.marcos2silva.marvel.data.response.MarvelResponse
-import br.com.marcos2silva.marvel.datasource.MarvelRemoteDataSource
+import br.com.marcos2silva.marvel.data.datasource.remote.MarvelRemoteDataSource
 
 class MarvelRemoteDataSourceImpl(
     private val service: MarvelService

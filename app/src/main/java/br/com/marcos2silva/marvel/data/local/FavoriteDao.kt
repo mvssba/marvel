@@ -1,11 +1,11 @@
-package br.com.marcos2silva.marvel.local
+package br.com.marcos2silva.marvel.data.local
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.marcos2silva.marvel.datasource.local.FavoriteLocalDataSource
-import br.com.marcos2silva.marvel.local.model.CharacterFavorite
+import br.com.marcos2silva.marvel.data.datasource.local.FavoriteLocalDataSource
+import br.com.marcos2silva.marvel.data.local.model.CharacterFavorite
 
 @Dao
 interface FavoriteDao : FavoriteLocalDataSource {

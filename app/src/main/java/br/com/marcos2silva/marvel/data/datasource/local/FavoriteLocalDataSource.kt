@@ -1,6 +1,6 @@
-package br.com.marcos2silva.marvel.datasource.local
+package br.com.marcos2silva.marvel.data.datasource.local
 
-import br.com.marcos2silva.marvel.local.model.CharacterFavorite
+import br.com.marcos2silva.marvel.data.local.model.CharacterFavorite
 
 interface FavoriteLocalDataSource {
     suspend fun favorites(): List<CharacterFavorite>

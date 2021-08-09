@@ -1,4 +1,4 @@
-package br.com.marcos2silva.marvel
+package br.com.marcos2silva.marvel.data.repository
 
 import androidx.paging.PagingData
 import br.com.marcos2silva.marvel.model.Character

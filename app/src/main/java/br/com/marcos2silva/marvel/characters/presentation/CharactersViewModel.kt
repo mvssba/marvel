@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import br.com.marcos2silva.marvel.MarvelRepository
+import br.com.marcos2silva.marvel.data.repository.MarvelRepository
 import br.com.marcos2silva.marvel.model.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

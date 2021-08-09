@@ -1,7 +1,7 @@
 package br.com.marcos2silva.marvel.di
 
 import androidx.room.Room
-import br.com.marcos2silva.marvel.local.FavoriteDataBase
+import br.com.marcos2silva.marvel.data.local.FavoriteDataBase
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 

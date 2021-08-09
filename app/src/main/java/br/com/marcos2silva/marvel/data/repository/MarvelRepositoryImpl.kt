@@ -1,4 +1,4 @@
-package br.com.marcos2silva.marvel
+package br.com.marcos2silva.marvel.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -6,9 +6,9 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import br.com.marcos2silva.marvel.characters.datasource.CharactersPagingSource
 import br.com.marcos2silva.marvel.data.api.MarvelService
-import br.com.marcos2silva.marvel.datasource.MarvelRemoteDataSource
-import br.com.marcos2silva.marvel.datasource.local.FavoriteLocalDataSource
-import br.com.marcos2silva.marvel.local.model.CharacterFavorite
+import br.com.marcos2silva.marvel.data.datasource.remote.MarvelRemoteDataSource
+import br.com.marcos2silva.marvel.data.datasource.local.FavoriteLocalDataSource
+import br.com.marcos2silva.marvel.data.local.model.CharacterFavorite
 import br.com.marcos2silva.marvel.model.Character
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +20,7 @@ class MarvelRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val marvelRemoteDataSource: MarvelRemoteDataSource,
     private val favoriteLocalDataSource: FavoriteLocalDataSource,
-//    private val dataSource: CharactersPagingSource,
-    private val service_: MarvelService
+    private val service: MarvelService
 ) : MarvelRepository {
 
     override suspend fun removeFavorite(favorite: Character) {
@@ -51,7 +50,7 @@ class MarvelRepositoryImpl(
 
         return Pager(
             config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { CharactersPagingSource(service_, name) }
+            pagingSourceFactory = { CharactersPagingSource(service, name) }
         ).flow
             .map { pagingData ->
                 pagingData.map { characterResponse ->

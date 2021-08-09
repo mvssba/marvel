@@ -1,18 +1,17 @@
 package br.com.marcos2silva.marvel.di
 
 import androidx.paging.PagingSource
-import br.com.marcos2silva.marvel.MarvelRepository
-import br.com.marcos2silva.marvel.MarvelRepositoryImpl
+import br.com.marcos2silva.marvel.data.repository.MarvelRepository
+import br.com.marcos2silva.marvel.data.repository.MarvelRepositoryImpl
 import br.com.marcos2silva.marvel.characters.datasource.CharactersPagingSource
 import br.com.marcos2silva.marvel.characters.presentation.CharactersViewModel
-import br.com.marcos2silva.marvel.data.MarvelRemoteDataSourceImpl
+import br.com.marcos2silva.marvel.data.datasource.remote.MarvelRemoteDataSourceImpl
 import br.com.marcos2silva.marvel.data.response.CharacterResponse
-import br.com.marcos2silva.marvel.datasource.MarvelRemoteDataSource
-import br.com.marcos2silva.marvel.datasource.local.FavoriteLocalDataSource
+import br.com.marcos2silva.marvel.data.datasource.remote.MarvelRemoteDataSource
+import br.com.marcos2silva.marvel.data.datasource.local.FavoriteLocalDataSource
 import br.com.marcos2silva.marvel.details.presentation.CharacterDetailViewModel
 import br.com.marcos2silva.marvel.favorites.CharactersFavoritesViewModel
-import br.com.marcos2silva.marvel.local.FavoriteDataBase
-import br.com.marcos2silva.marvel.usecase.CharacterUseCase
+import br.com.marcos2silva.marvel.data.local.FavoriteDataBase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
@@ -26,10 +25,9 @@ object MarvelModule {
     }
 
     private val domain = module {
-        factory { CharacterUseCase(repository = get()) }
         factory<MarvelRepository> {
             MarvelRepositoryImpl(
-                service_ = get(),
+                service = get(),
                 marvelRemoteDataSource = get(),
                 favoriteLocalDataSource = get()
             )
