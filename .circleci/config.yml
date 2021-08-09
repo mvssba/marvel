@@ -32,6 +32,23 @@ jobs:
           command: |
             ./gradlew assembleRelease    
 
+
+  deploy_app_distribution_firebase:
+    executor:
+      name: android/android-machine
+    steps:
+      - checkout
+      - android/run-tests:
+          test-command: ./gradlew lint testRelease --continue
+      - run:
+          name: Export Token Firebase
+          command: |
+            export FIREBASE_TOKEN=$FIREBASE_TOKEN
+      - run:
+          name: App Distribution Firebase
+          command: |
+            ./gradlew assembleRelease appDistributionUploadRelease
+
 workflows:
   # Below is the definition of your workflow.
   # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
@@ -44,3 +61,9 @@ workflows:
           branchs:
             only:
               - master
+      - deploy_app_distribution_firebase:
+          filters:
+            branches:
+              only:
+                - master
+
