@@ -14,8 +14,8 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.com.marcos2silva.marvel.characters.adapter.CharacterAdapter
-import br.com.marcos2silva.marvel.characters.adapter.CharacterComparator
 import br.com.marcos2silva.marvel.databinding.FragmentCharactersBinding
+import br.com.marcos2silva.marvel.viewpager.ViewPagerFragmentDirections
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -26,11 +26,13 @@ class CharactersFragment : Fragment() {
     private val viewModel: CharactersViewModel by viewModel()
 
     private val characterAdapter by lazy {
-        CharacterAdapter(CharacterComparator) { id ->
-            findNavController().navigate(
-                CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailFragment(id)
-            )
-        }
+        CharacterAdapter({ id ->
+            val action = ViewPagerFragmentDirections.actionViewPagerFragmentToCharacterDetailFragment(id)
+            findNavController().navigate(action)
+        }, { item ->
+            if (item.isFavorite) viewModel.remove(item)
+            else viewModel.favorite(item)
+        })
     }
 
     private lateinit var binding: FragmentCharactersBinding
@@ -66,9 +68,7 @@ class CharactersFragment : Fragment() {
         binding.recyclerView.apply {
             setHasFixedSize(true)
             adapter = characterAdapter
-            addItemDecoration(
-                DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-            )
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 
@@ -93,6 +93,10 @@ class CharactersFragment : Fragment() {
                 setError(loadState)
             }
         }
+
+//        viewModel.state.observe(viewLifecycleOwner) {
+//            characterAdapter.refresh()
+//        }
     }
 
     private fun setError(loadState: CombinedLoadStates) {

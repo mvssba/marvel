@@ -1,6 +1,6 @@
 package br.com.marcos2silva.marvel.di
 
-import br.com.marcos2silva.marvel.data.api.MarvelService_
+import br.com.marcos2silva.marvel.data.api.MarvelService
 import br.com.marcos2silva.marvel.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -30,7 +30,7 @@ object NetworkModule {
             .build()
     }
 
-    private fun providerMarvelService(retrofit: Retrofit) = retrofit.create(MarvelService_::class.java)
+    private fun providerMarvelService(retrofit: Retrofit) = retrofit.create(MarvelService::class.java)
 
     fun load() {
         loadKoinModules(network)

@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import br.com.marcos2silva.marvel.characters.presentation.ViewState
-import br.com.marcos2silva.marvel.data.response.CharacterResponse
+import br.com.marcos2silva.marvel.characters.presentation.DetailViewState
 import br.com.marcos2silva.marvel.databinding.FragmentCharacterDetailBinding
+import br.com.marcos2silva.marvel.model.Character
 import coil.load
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,7 +26,8 @@ class CharacterDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.character(1011334)
+        val id = arguments?.get("id") as? Int
+        id?.let { viewModel.character(it) }
 
         observableState()
     }
@@ -34,16 +35,14 @@ class CharacterDetailFragment : Fragment() {
     private fun observableState() {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
-                is ViewState.Character -> fill(it.item)
+                is DetailViewState.Success -> fill(it.item)
             }
         }
     }
 
-    private fun fill(item: CharacterResponse?) {
-        item?.let { character ->
-            binding.imageView.load("${character.thumbnail.path}.${character.thumbnail.extension}")
-            binding.textViewTitle.text = character.name
-            binding.textViewDescription.text = character.description
-        }
+    private fun fill(item: Character) {
+        binding.imageView.load(item.thumbnail)
+        binding.textViewTitle.text = item.name
+        binding.textViewDescription.text = item.description
     }
 }

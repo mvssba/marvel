@@ -2,7 +2,7 @@ package br.com.marcos2silva.marvel.characters.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import br.com.marcos2silva.marvel.data.api.MarvelService_
+import br.com.marcos2silva.marvel.data.api.MarvelService
 import br.com.marcos2silva.marvel.data.response.CharacterResponse
 import br.com.marcos2silva.marvel.network.ErrorHandle
 import com.google.gson.GsonBuilder
@@ -12,7 +12,7 @@ private const val NETWORK_PAGE_SIZE = 20
 private const val INITIAL_LOAD_SIZE = 0
 
 class CharactersPagingSource(
-    private val service: MarvelService_,
+    private val service: MarvelService,
     private val name: String
 ) : PagingSource<Int, CharacterResponse>() {
 

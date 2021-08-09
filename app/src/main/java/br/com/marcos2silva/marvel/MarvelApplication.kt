@@ -1,6 +1,7 @@
 package br.com.marcos2silva.marvel
 
 import android.app.Application
+import br.com.marcos2silva.marvel.di.DatabaseModule
 import br.com.marcos2silva.marvel.di.MarvelModule
 import br.com.marcos2silva.marvel.di.NetworkModule
 import org.koin.android.ext.koin.androidContext
@@ -18,6 +19,7 @@ class MarvelApplication : Application() {
 
             NetworkModule.load()
             MarvelModule.load()
+            DatabaseModule.load()
         }
     }
 }

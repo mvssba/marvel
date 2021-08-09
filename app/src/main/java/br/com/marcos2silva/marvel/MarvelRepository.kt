@@ -1,10 +1,13 @@
 package br.com.marcos2silva.marvel
 
 import androidx.paging.PagingData
-import br.com.marcos2silva.marvel.data.response.CharacterResponse
+import br.com.marcos2silva.marvel.model.Character
 import kotlinx.coroutines.flow.Flow
 
 interface MarvelRepository {
-    suspend fun allCharacters(name: String): Flow<PagingData<CharacterResponse>>
-    suspend fun character(id: Int): CharacterResponse?
+    suspend fun allCharacters(name: String): Flow<PagingData<Character>>
+    suspend fun allCharactersFavorites(): List<Character>
+    suspend fun character(id: Int): Character?
+    suspend fun insertFavorite(favorite: Character)
+    suspend fun removeFavorite(favorite: Character)
 }

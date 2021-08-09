@@ -1,16 +1,35 @@
 package br.com.marcos2silva.marvel.characters.presentation
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import br.com.marcos2silva.marvel.MarvelRepository
-import br.com.marcos2silva.marvel.data.response.CharacterResponse
+import br.com.marcos2silva.marvel.model.Character
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class CharactersViewModel(
     private val repository: MarvelRepository
 ) : ViewModel() {
 
-    suspend fun getCharacters(name: String): Flow<PagingData<CharacterResponse>> {
+    private val _state: MutableLiveData<Boolean> = MutableLiveData()
+    val state: LiveData<Boolean> = _state
+
+    suspend fun getCharacters(name: String): Flow<PagingData<Character>> {
         return repository.allCharacters(name)
+    }
+
+    fun favorite(item: Character) {
+        viewModelScope.launch {
+            repository.insertFavorite(item)
+        }
+    }
+
+    fun remove(item: Character) {
+        viewModelScope.launch {
+            repository.removeFavorite(item)
+        }
     }
 }

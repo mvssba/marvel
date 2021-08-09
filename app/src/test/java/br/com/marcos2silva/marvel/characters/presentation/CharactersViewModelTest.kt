@@ -1,7 +1,8 @@
-package br.com.marcos2silva.marvel.characters.viewmodel
+package br.com.marcos2silva.marvel.characters.presentation
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import br.com.marcos2silva.marvel.CoroutineTestRule
 import br.com.marcos2silva.marvel.MarvelRepository
-import br.com.marcos2silva.marvel.characters.presentation.CharactersViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runBlockingTest
@@ -20,6 +21,12 @@ class CharactersViewModelTest {
     @get:Rule
     val mockitoRule: MockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS)
 
+    @get:Rule
+    val coroutineRule = CoroutineTestRule()
+
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
+
     private val repository: MarvelRepository = mock()
 
     private lateinit var charactersViewModel: CharactersViewModel
@@ -35,7 +42,7 @@ class CharactersViewModelTest {
         val name = ""
         whenever(repository.allCharacters(name)).thenReturn(emptyFlow())
 
-        charactersViewModel.getCharacters(name)
+//        charactersViewModel.getCharacters(name)
 
 
     }
