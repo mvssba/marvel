@@ -1,5 +1,7 @@
-package br.com.marcos2silva.network
+package br.com.marcos2silva.network.di
 
+import br.com.marcos2silva.network.BuildConfig
+import br.com.marcos2silva.network.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.context.loadKoinModules

@@ -1,5 +1,7 @@
-package br.com.marcos2silva.network
+package br.com.marcos2silva.network.interceptor
 
+import br.com.marcos2silva.network.BuildConfig
+import br.com.marcos2silva.network.md5
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.util.*
