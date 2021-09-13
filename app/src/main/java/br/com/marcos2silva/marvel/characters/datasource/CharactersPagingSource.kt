@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import br.com.marcos2silva.marvel.data.api.MarvelService
 import br.com.marcos2silva.marvel.data.response.CharacterResponse
-import br.com.marcos2silva.marvel.network.ErrorHandle
+import br.com.marcos2silva.network.model.ErrorHandle
 import com.google.gson.GsonBuilder
 import retrofit2.HttpException
 
@@ -29,7 +29,11 @@ class CharactersPagingSource(
                 if (name.isEmpty())
                     service.allCharacters(offset = offset, limit = NETWORK_PAGE_SIZE)
                 else
-                    service.charactersByName(name = name, offset = offset, limit = NETWORK_PAGE_SIZE)
+                    service.charactersByName(
+                        name = name,
+                        offset = offset,
+                        limit = NETWORK_PAGE_SIZE
+                    )
 
             LoadResult.Page(
                 data = response.data.results,
