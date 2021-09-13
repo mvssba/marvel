@@ -1,16 +1,21 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 31
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "BASE_URL", "\"${Keys.get(rootProject.file("local.properties"), "marvel.base.url")}\""
+        buildConfigField "String", "API_KEY", "\"${Keys.get(rootProject.file("local.properties"), "marvel.api.key")}\""
+        buildConfigField "String", "PRIVATE_KEY", "\"${Keys.get(rootProject.file("local.properties"), "marvel.private.key")}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -39,4 +44,18 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
+    def retrofit = "2.6.2"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+
+    //koin
+//    implementation "org.koin:koin-core:2.1.6"
+    implementation "org.koin:koin-android:2.1.6"
+//    implementation "org.koin:koin-androidx-viewmodel:2.1.5"
+//    implementation "org.koin:koin-androidx-scope:2.1.6"
 }

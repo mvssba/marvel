@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "br.com.marcos2silva.marvel"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -54,6 +54,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation project(path: ':network')
 
 
     testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
