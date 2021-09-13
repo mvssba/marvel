@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface MarvelRepository {
     suspend fun allCharacters(name: String): Flow<PagingData<Character>>
     suspend fun allCharactersFavorites(): List<Character>
-    suspend fun character(id: Int): Character?
     suspend fun insertFavorite(favorite: Character)
     suspend fun removeFavorite(favorite: Character)
 }

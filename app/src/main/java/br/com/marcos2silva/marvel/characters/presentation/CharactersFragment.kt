@@ -20,22 +20,24 @@ import br.com.marcos2silva.marvel.viewpager.ViewPagerFragmentDirections
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CharactersFragment : Fragment() {
 
-    private val viewModel: CharactersViewModel by viewModel()
+    private val viewModel: CharactersViewModel by sharedViewModel()
 
     private val characterAdapter by lazy {
-        CharacterAdapter({ id ->
+        CharacterAdapter({ item ->
+            viewModel.characterSelected = item
+
             val action =
-                ViewPagerFragmentDirections.actionViewPagerFragmentToCharacterDetailFragment(id)
+                ViewPagerFragmentDirections.actionViewPagerFragmentToCharacterDetailFragment(item.id)
             findNavController().navigate(action)
         }, { item ->
             if (item.isFavorite) viewModel.remove(item)
             else viewModel.favorite(item)
 
-            updateItemList(item, !item.isFavorite)
+            updateItemList(item, item.isFavorite.not())
         })
     }
 

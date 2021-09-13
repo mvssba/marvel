@@ -20,7 +20,4 @@ interface MarvelService {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
     ): MarvelResponse
-
-    @GET("v1/public/characters/{charactersId}")
-    suspend fun character(@Path("charactersId") id: Int): MarvelResponse
 }

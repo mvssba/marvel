@@ -6,7 +6,6 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import br.com.marcos2silva.marvel.characters.datasource.CharactersPagingSource
 import br.com.marcos2silva.marvel.data.api.MarvelService
-import br.com.marcos2silva.marvel.data.datasource.remote.MarvelRemoteDataSource
 import br.com.marcos2silva.marvel.data.datasource.local.FavoriteLocalDataSource
 import br.com.marcos2silva.marvel.data.local.model.CharacterFavorite
 import br.com.marcos2silva.marvel.model.Character
@@ -18,7 +17,6 @@ import kotlinx.coroutines.flow.map
 
 class MarvelRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val marvelRemoteDataSource: MarvelRemoteDataSource,
     private val favoriteLocalDataSource: FavoriteLocalDataSource,
     private val service: MarvelService
 ) : MarvelRepository {
@@ -59,23 +57,11 @@ class MarvelRepositoryImpl(
                     Character(
                         id = characterResponse.id,
                         name = characterResponse.name,
+                        description = characterResponse.description,
                         thumbnail = "${characterResponse.thumbnail.path}.${characterResponse.thumbnail.extension}",
                         isFavorite = favorite?.let { true } ?: false
                     )
                 }
             }.flowOn(ioDispatcher)
-    }
-
-    override suspend fun character(id: Int): Character? {
-        return marvelRemoteDataSource.character(id)
-            .data.results
-            .map {
-                Character(
-                    id = it.id,
-                    name = it.name,
-                    description = it.description,
-                    thumbnail = "${it.thumbnail.path}.${it.thumbnail.extension}"
-                )
-            }.firstOrNull()
     }
 }

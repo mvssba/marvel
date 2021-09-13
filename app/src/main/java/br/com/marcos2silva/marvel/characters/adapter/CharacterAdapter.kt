@@ -10,7 +10,7 @@ import br.com.marcos2silva.marvel.model.CharacterComparator
 import coil.load
 
 class CharacterAdapter(
-    private val clickListener: (item: Int) -> Unit,
+    private val clickListener: (item: Character) -> Unit,
     private val clickListenerFavorite: (item: Character) -> Unit
 ) : PagingDataAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterComparator) {
 
@@ -38,7 +38,7 @@ class CharacterAdapter(
 
             imageView.load(character.thumbnail) { crossfade(true) }
 
-            container.setOnClickListener { clickListener(character.id) }
+            container.setOnClickListener { clickListener(character) }
 
             buttonFavorite.setImageResource(
                 if (character.isFavorite) android.R.drawable.star_on else android.R.drawable.star_off
