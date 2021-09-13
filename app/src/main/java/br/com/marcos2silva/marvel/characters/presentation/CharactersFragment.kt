@@ -15,6 +15,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.com.marcos2silva.marvel.characters.adapter.CharacterAdapter
 import br.com.marcos2silva.marvel.databinding.FragmentCharactersBinding
+import br.com.marcos2silva.marvel.model.Character
 import br.com.marcos2silva.marvel.viewpager.ViewPagerFragmentDirections
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -27,17 +28,24 @@ class CharactersFragment : Fragment() {
 
     private val characterAdapter by lazy {
         CharacterAdapter({ id ->
-            val action = ViewPagerFragmentDirections.actionViewPagerFragmentToCharacterDetailFragment(id)
+            val action =
+                ViewPagerFragmentDirections.actionViewPagerFragmentToCharacterDetailFragment(id)
             findNavController().navigate(action)
         }, { item ->
             if (item.isFavorite) viewModel.remove(item)
             else viewModel.favorite(item)
+
+            updateItemList(item, !item.isFavorite)
         })
     }
 
     private lateinit var binding: FragmentCharactersBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -93,10 +101,6 @@ class CharactersFragment : Fragment() {
                 setError(loadState)
             }
         }
-
-//        viewModel.state.observe(viewLifecycleOwner) {
-//            characterAdapter.refresh()
-//        }
     }
 
     private fun setError(loadState: CombinedLoadStates) {
@@ -114,5 +118,10 @@ class CharactersFragment : Fragment() {
 
     private fun showProgressBar(visible: Boolean) {
         binding.progressCircular.isVisible = visible
+    }
+
+    private fun updateItemList(item: Character, isFavorite: Boolean) {
+        item.isFavorite = isFavorite
+        characterAdapter.notifyDataSetChanged()
     }
 }
