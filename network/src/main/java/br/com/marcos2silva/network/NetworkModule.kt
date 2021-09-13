@@ -1,7 +1,5 @@
-package br.com.marcos2silva.marvel.di
+package br.com.marcos2silva.network
 
-import br.com.marcos2silva.marvel.data.api.MarvelService
-import br.com.marcos2silva.marvel.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.context.loadKoinModules
@@ -10,27 +8,27 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkModule {
+
     private val network = module {
         factory { AuthInterceptor() }
         factory { providerOkHttpClient(get()) }
-        factory { providerMarvelService(get()) }
         single { providerRetrofit(get()) }
     }
 
     private fun providerRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl("http://gateway.marvel.com/")
+        return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
     private fun providerOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient().newBuilder()
-            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .addInterceptor(authInterceptor)
             .build()
     }
-
-    private fun providerMarvelService(retrofit: Retrofit) = retrofit.create(MarvelService::class.java)
 
     fun load() {
         loadKoinModules(network)
