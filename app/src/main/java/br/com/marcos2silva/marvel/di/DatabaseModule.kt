@@ -14,8 +14,6 @@ object DatabaseModule {
                 .allowMainThreadQueries()
                 .build()
         }
-
-//        single { get<Favo }
     }
 
 
