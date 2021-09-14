@@ -12,11 +12,7 @@
         tools:layout="@layout/fragment_characters_favorites">
         <action
             android:id="@+id/action_viewPagerFragment_to_characterDetailFragment"
-            app:destination="@id/characterDetailFragment">
-            <argument
-                android:name="id"
-                app:argType="integer" />
-        </action>
+            app:destination="@id/characterDetailFragment" />
     </fragment>
 
     <fragment

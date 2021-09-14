@@ -16,7 +16,6 @@ object DatabaseModule {
         }
     }
 
-
     fun load() {
         loadKoinModules(database)
     }

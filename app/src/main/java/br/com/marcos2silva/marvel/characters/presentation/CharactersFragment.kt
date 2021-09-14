@@ -31,7 +31,7 @@ class CharactersFragment : Fragment() {
             viewModel.characterSelected = item
 
             val action =
-                ViewPagerFragmentDirections.actionViewPagerFragmentToCharacterDetailFragment(item.id)
+                ViewPagerFragmentDirections.actionViewPagerFragmentToCharacterDetailFragment()
             findNavController().navigate(action)
         }, { item ->
             if (item.isFavorite) viewModel.remove(item)
