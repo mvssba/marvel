@@ -1,11 +1,14 @@
 package br.com.marcos2silva.marvel.characters.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingData
+import br.com.marcos2silva.marvel.CharacterHelper
 import br.com.marcos2silva.marvel.CoroutineTestRule
 import br.com.marcos2silva.marvel.data.repository.MarvelRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -39,11 +42,13 @@ class CharactersViewModelTest {
     @Test
     fun `getCharacters should call allCharacters return all characters`() = runBlockingTest {
 
+        val dataPaging = MutableLiveData(PagingData.from(listOf(CharacterHelper.character)))
+
         val name = ""
-        whenever(repository.allCharacters(name)).thenReturn(emptyFlow())
+        whenever(repository.allCharacters(name)).thenReturn(dataPaging)
 
-//        charactersViewModel.getCharacters(name)
+        val pagingDataCharacter = charactersViewModel.getCharacters(name)
 
-
+        Assert.assertEquals(dataPaging, pagingDataCharacter)
     }
 }
