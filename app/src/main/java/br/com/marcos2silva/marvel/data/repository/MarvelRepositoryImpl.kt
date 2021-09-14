@@ -1,8 +1,11 @@
 package br.com.marcos2silva.marvel.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.liveData
 import androidx.paging.map
 import br.com.marcos2silva.marvel.characters.datasource.CharactersPagingSource
 import br.com.marcos2silva.marvel.data.api.MarvelService
@@ -11,9 +14,7 @@ import br.com.marcos2silva.marvel.data.local.model.CharacterFavorite
 import br.com.marcos2silva.marvel.model.Character
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class MarvelRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
@@ -43,25 +44,28 @@ class MarvelRepositoryImpl(
         }
     }
 
-    override suspend fun allCharacters(name: String): Flow<PagingData<Character>> {
+    override suspend fun allCharacters(name: String): LiveData<PagingData<Character>> {
         val localCharacters = favoriteLocalDataSource.favorites()
 
-        return Pager(
-            config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { CharactersPagingSource(service, name) }
-        ).flow
-            .map { pagingData ->
-                pagingData.map { characterResponse ->
-                    val favorite = localCharacters.singleOrNull { it.id == characterResponse.id }
+        return withContext(ioDispatcher) {
+            Pager(
+                config = PagingConfig(pageSize = 20),
+                pagingSourceFactory = { CharactersPagingSource(service, name) }
+            ).liveData
+                .map { pagingData ->
+                    pagingData.map { characterResponse ->
+                        val favorite =
+                            localCharacters.singleOrNull { it.id == characterResponse.id }
 
-                    Character(
-                        id = characterResponse.id,
-                        name = characterResponse.name,
-                        description = characterResponse.description,
-                        thumbnail = "${characterResponse.thumbnail.path}.${characterResponse.thumbnail.extension}",
-                        isFavorite = favorite?.let { true } ?: false
-                    )
+                        Character(
+                            id = characterResponse.id,
+                            name = characterResponse.name,
+                            description = characterResponse.description,
+                            thumbnail = "${characterResponse.thumbnail.path}.${characterResponse.thumbnail.extension}",
+                            isFavorite = favorite?.let { true } ?: false
+                        )
+                    }
                 }
-            }.flowOn(ioDispatcher)
+        }
     }
 }

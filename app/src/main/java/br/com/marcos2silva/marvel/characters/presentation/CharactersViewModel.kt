@@ -1,5 +1,6 @@
 package br.com.marcos2silva.marvel.characters.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -14,7 +15,7 @@ class CharactersViewModel(
 
     var characterSelected: Character? = null
 
-    suspend fun getCharacters(name: String): Flow<PagingData<Character>> {
+    suspend fun getCharacters(name: String): LiveData<PagingData<Character>> {
         return repository.allCharacters(name)
     }
 

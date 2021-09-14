@@ -17,8 +17,6 @@ import br.com.marcos2silva.marvel.characters.adapter.CharacterAdapter
 import br.com.marcos2silva.marvel.databinding.FragmentCharactersBinding
 import br.com.marcos2silva.marvel.model.Character
 import br.com.marcos2silva.marvel.viewpager.ViewPagerFragmentDirections
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -67,8 +65,7 @@ class CharactersFragment : Fragment() {
             val name = binding.editTextTextPersonName.text.toString()
 
             viewModel.getCharacters(name)
-                .distinctUntilChanged()
-                .collectLatest {
+                .observeForever {
                     characterAdapter.submitData(viewLifecycleOwner.lifecycle, it)
                 }
         }
